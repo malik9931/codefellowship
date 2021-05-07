@@ -1,4 +1,4 @@
-package com.example.codefellowship;
+package com.example.codefellowship.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

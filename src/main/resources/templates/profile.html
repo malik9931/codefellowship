@@ -1,15 +1,112 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-</head>
-<body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-<h2>Welcome to <span th:text="${user.username}"/>'s profile ....</h2>
+</head>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        margin-left: 5px;
+        margin-left: 5px;
+        background-color: #9ad3bc;
+    }
+    .bioContainer{
+        display: flex;
+        flex-direction: column;
+
+    }
+.persImg{
+    width: 30%;
+    height: 30%;
+}
+.singleCardContainer{
+    margin-top: 10px;
+}
+</style>
+
+<body>
+    <nav class="border border-success rounded-1 navbar navbar-light bg-light">
+        <ul class="nav">
+            <li class="nav-item">
+                <a aria-current="page" href="/" class="nav-link active">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/myprofile">My Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/signup" th:if="!${username}">Sign Up</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login" th:if="!${username}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts" th:if="${username}"> All posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/myprofile"><span th:if="${username}" th:text="${username}"></span></a>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/perform_logout" th:if="${username}">Log Out</a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+    <!--<h2 th:if="${#fields.hasErrors('age')}">Invalid Age</h2>-->
+    <h2>Welcome to <span th:text="${user.username}"></span>'s profile ....</h2>
+
+    <div class="bioContainer">
+        <img class="rounded persImg" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg">
+
+        <p ><b>Your First Name is: </b><span th:text="${user.firstName}"></span></p>
+        <p><b>Last Name is: </b><span th:text="${user.lastName}"></span></p>
+        <p><b>Birth Date is: </b><span th:text="${user.dateOfBirth}"></span></p>
+        <p><b>Your Bio is: </b><span th:text="${user.bio}"></span></p>
+    </div>
+
+    <!-----------------------------Adding Post------------------------>
+    <form th:if="${isAllow}" class="postClass" action="/addPost" method="post">
+<!--        th:href="@{|/albums/${album.id}|}"-->
+        <h3>Add A Post</h3>
+        <label>
+            post body:
+
+            <textarea type="text" id="body" th:name="body" placeholder="what do u think now?"></textarea>
+        </label>
+        <input value="Go Ahead" type="submit">
+    </form>
+
+    <!------------------------------Showing Posts--------------->
+    <div class="allCardsContainer">
+        <div class=" card singleCardContainer" th:each="post : ${user2}">
+            <div class="smallContainer">
+                <h5>Post body: <p th:text=${post.body}></p> </h5>
+<!--                <p>created at: <span th:text=${post.createdAt}></span></p>-->
+<!--                                <p>created at: <span th:text=${post.body}></span></p>-->
+
+                <br>
+
+                <!--    th:src="@{/images/valayev.jpg}"-->
+
+            </div>
+        </div>
+    </div>
 
 </body>
+
 </html>
