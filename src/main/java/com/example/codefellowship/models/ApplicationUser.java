@@ -1,11 +1,11 @@
-package com.example.codefellowship;
+package com.example.codefellowship.models;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -20,6 +20,11 @@ public class ApplicationUser implements UserDetails {
     private String lastName;
     private String dateOfBirth;
     private String bio;
+
+    // Select * from user posts where major_id = id
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserPost> posts;
+
 
     public ApplicationUser(){
     }
@@ -112,5 +117,13 @@ public class ApplicationUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setPosts(List<UserPost> posts) {
+        this.posts = posts;
+    }
+
+    public List<UserPost> getUserPost() {
+        return posts;
     }
 }
