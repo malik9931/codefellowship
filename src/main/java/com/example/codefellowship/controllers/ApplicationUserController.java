@@ -46,23 +46,6 @@ public class ApplicationUserController {
     }
 
 
-//    @GetMapping("/myprofile")
-//    public String getUserProfilePage(Principal p, Model m){
-//        ApplicationUser userDetails = (ApplicationUser) ((UsernamePasswordAuthenticationToken) p).getPrincipal();
-//        try {
-//
-//            m.addAttribute("user",applicationUserRepository.findById(userDetails.getId()).get());
-//        }catch (Exception ex){
-//            System.out.println(ex);
-//        }
-//        m.addAttribute("username", applicationUserRepository.findById(userDetails.getId()).get().getUsername());
-//
-//        m.addAttribute("isAllow",true);
-//        System.out.println(userDetails.toString());
-//
-//        return "profile";
-//
-//    }
 
     @GetMapping("/myprofile")
     public String profile(Model m, Principal p){
@@ -73,6 +56,10 @@ public class ApplicationUserController {
         m.addAttribute("user2",userPostRepository.findByUserId(id));
         System.out.println(userPostRepository.findByUserId(id));
         m.addAttribute("isAllow",true);
+//        ApplicationUser userDetails = (ApplicationUser) ((UsernamePasswordAuthenticationToken) p) .getPrincipal();
+        m.addAttribute("loggedInUser",userDetails);
+        m.addAttribute("isAllowNav",true);
+
         return "profile";
     }
 
@@ -87,6 +74,8 @@ public class ApplicationUserController {
         if (applicationRequiredUser != null){
             if (((UsernamePasswordAuthenticationToken) p) != null){
                 ApplicationUser userDetails = (ApplicationUser) ((UsernamePasswordAuthenticationToken) p) .getPrincipal();
+                m.addAttribute("loggedInUser",userDetails);
+                m.addAttribute("isAllowNav",true);
                 System.out.println("userId"+userDetails.getId()+" pathVraiable Id: "+ id);
                 if (((int)id == userDetails.getId())){
                     System.out.println("Inside if true");
