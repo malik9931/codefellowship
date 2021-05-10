@@ -46,10 +46,10 @@
                 <a class="nav-link" href="/signup" th:if="!${username}">Sign Up</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/login" th:if="!${username}">Login</a>
+                <a class="nav-link" href="/login" th:if="!${username}">Logout</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/posts" th:if="${username}"> All posts</a>
+                <a class="nav-link" href="/posts" th:if="${username}">All posts</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/myprofile"><span th:if="${username}" th:text="${username}"></span></a>
@@ -62,12 +62,17 @@
             <li class="nav-item">
                 <a class="nav-link" href="/perform_logout" th:if="${username}">Log Out</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login" th:if="${isAllowNav}"><span th:text="${loggedInUser.username}"></span> account</a>
+            </li>
         </ul>
     </nav>
 
 
 
     <!--<h2 th:if="${#fields.hasErrors('age')}">Invalid Age</h2>-->
+    <h1><span th:text="${loggedInUser.username}"></span> you are logged in</h1>
+
     <h2>Welcome to <span th:text="${user.username}"></span>'s profile ....</h2>
 
     <div class="bioContainer">
